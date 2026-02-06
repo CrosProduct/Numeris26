@@ -1,0 +1,529 @@
+:root {
+  --bg-color: #f0f2f5;
+  --formula-bg: #ffffff;
+  --pool-bg: #e0e5ec;
+  --primary-color: #3b82f6;
+  --success-color: #22c55e;
+  --error-color: #ef4444;
+  --text-color: #1f2937;
+  --slot-border: #cbd5e1;
+  --slot-active: #3b82f6;
+  --tile-bg: #ffffff;
+  --tile-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --tile-text: #1f2937;
+
+  --spacing-base: clamp(0.7rem, 2.5vh, 1.3rem);
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Responsive sizes: scaled up by ~30% */
+  /* Formula slots: from min(50px, 7vh) to min(65px, 9vh) */
+  --slot-size: clamp(42px, 14vw, min(65px, 9vh));
+
+  /* Pool slots: from min(70px, 10vh) to min(90px, 13vh) */
+  --pool-slot-size: clamp(62px, 23vw, min(90px, 13vh));
+
+  --font-size-base: clamp(1.3rem, 2.6vh, 2rem);
+}
+
+/* Reset box-sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #f0f2f5;
+  color: var(--text-color);
+  overscroll-behavior: none;
+  user-select: none;
+  touch-action: none;
+  /* Prevent all browser gestures including scroll */
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+  /* Wide but not full screen */
+  height: 100dvh;
+  margin: 0 auto;
+  background-color: #fff;
+  overflow: hidden;
+  position: relative;
+  touch-action: none;
+  /* Extra safety for the container */
+}
+
+/* Add media query to round corners on desktop */
+@media (min-width: 1201px) {
+  .app-container {
+    border-radius: 24px;
+    margin: 20px;
+  }
+}
+
+.header {
+  flex: 0 0 auto;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  position: relative;
+  /* For TimerBar positioning */
+}
+
+.btn-quit {
+  position: absolute;
+  top: 0.75rem;
+  left: 1rem;
+  background: none;
+  border: none;
+  color: #9ca3af;
+  /* Grey X */
+  font-size: 2.5rem;
+  /* Larger X */
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-quit:hover {
+  color: #6b7280;
+  transform: scale(1.1);
+}
+
+.history-dots {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 0.5rem;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2.5px solid #e5e7eb;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.dot.won {
+  background-color: var(--success-color);
+  border-color: var(--success-color);
+}
+
+.dot.lost {
+  background-color: var(--error-color);
+  border-color: var(--error-color);
+}
+
+.dot.current {
+  border-color: var(--primary-color);
+  border-width: 4px;
+  transform: scale(1.3);
+}
+
+.timer {
+  font-variant-numeric: tabular-nums;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.game-area {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+  /* Allow flex shrinking */
+}
+
+.formula-area {
+  flex: 1;
+  background-color: var(--formula-bg);
+  padding: var(--spacing-base);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(0.7rem, 4vh, 2rem);
+}
+
+.pool-area {
+  flex: 1;
+  background-color: var(--pool-bg);
+  padding: var(--spacing-base);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.formula-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.operator,
+.equals {
+  font-size: var(--font-size-base);
+  font-weight: bold;
+  color: #6b7280;
+  width: 32px;
+  text-align: center;
+}
+
+.slot {
+  width: var(--slot-size);
+  height: var(--slot-size);
+  border: 2px solid var(--slot-border);
+  border-radius: var(--radius-md);
+  background-color: #f8fafc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.slot.active {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.slot.error {
+  border-color: var(--error-color);
+  background-color: #fef2f2;
+}
+
+/* Pool slots are larger */
+.pool-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(10px, 3vh, 20px);
+}
+
+.pool-slot {
+  width: var(--pool-slot-size);
+  height: var(--pool-slot-size);
+  border-radius: var(--radius-lg);
+  background-color: rgba(255, 255, 255, 0.3);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tile {
+  width: 100%;
+  height: 100%;
+  background-color: var(--tile-bg);
+  border-radius: inherit;
+  box-shadow: var(--tile-shadow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--tile-text);
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  user-select: none;
+}
+
+.tile:active {
+  transform: scale(0.95);
+}
+
+/* Start Screen */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  gap: 2rem;
+  width: 100%;
+  height: 100%;
+}
+
+.overlay h1 {
+  font-size: 4.5rem;
+  margin-bottom: 2rem;
+}
+
+.overlay h1.praise-message {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.difficulty-selector {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.difficulty-option {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: var(--radius-lg);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.difficulty-option input {
+  display: none;
+}
+
+.difficulty-option.active {
+  background-color: rgba(59, 130, 246, 0.15);
+  border-color: var(--primary-color);
+  color: white;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
+}
+
+.difficulty-option:hover:not(.active) {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+@keyframes punch {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.punch {
+  animation: punch 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.8rem 2.5rem;
+  font-size: 1.3rem;
+  border-radius: var(--radius-full);
+  border: none;
+  font-weight: 700;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.btn-primary:active {
+  transform: scale(0.95);
+}
+
+.start-overlay {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0.75rem 0.75rem;
+  overflow-y: auto;
+  gap: 0.4rem;
+  background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 1) 100%);
+}
+
+.main-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.4rem;
+  margin: 0;
+  background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.8px;
+}
+
+.panel-section {
+  background: rgba(30, 41, 59, 0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1.2rem;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.section-title {
+  font-size: 1.4rem;
+  margin: 0;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.section-date {
+  font-size: 1rem;
+  color: #94a3b8;
+  margin-top: -0.8rem;
+}
+
+.daily-controls {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.daily-result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.daily-result-text {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+}
+
+.daily-actions {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.btn-secondary {
+  flex: 1;
+  padding: 0.7rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-practice-start {
+  width: 100%;
+  max-width: 300px;
+}
+
+.btn-daily {
+  background-color: var(--success-color);
+  box-shadow: 0 4px 6px rgba(34, 197, 94, 0.3);
+}
+
+.btn-daily:hover {
+  background-color: #16a34a;
+}
+
+.stats-spreadsheet-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  text-align: left;
+  color: #e2e8f0;
+}
+
+.stats-table th {
+  padding: 0.5rem 0.4rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.stats-table td {
+  padding: 0.6rem 0.4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stats-table .diff-name {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+@media (max-width: 480px) {
+
+  /* Scale down for small devices - slightly larger than before */
+  .slot {
+    width: 50px;
+    height: 50px;
+  }
+
+  .pool-slot {
+    width: 75px;
+    height: 75px;
+  }
+
+  .operator,
+  .equals {
+    font-size: 1.3rem;
+    width: 20px;
+  }
+}
