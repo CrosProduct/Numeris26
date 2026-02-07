@@ -40,7 +40,7 @@ function App() {
       : 'Quit';
     const dateStr = formatDisplayNameDate(stats.dailyChallenge.date);
     const shareText = `Numeris Daily Challenge\n${resultText}\non ${dateStr}`;
-    const shareUrl = 'https://numeris26.surge.sh/';
+    const shareUrl = 'https://numeris26-76e59.web.app';
 
     if (navigator.share) {
       try {
