@@ -191,9 +191,9 @@ function App() {
                       return (
                         <tr key={d}>
                           <td className="diff-name">{d.charAt(0).toUpperCase() + d.slice(1)}</td>
-                          <td>{convertToEmojiNumbers(s.totalRounds.toString())}</td>
-                          <td>{convertToEmojiNumbers(formatTime(s.todayBestTime))}</td>
-                          <td>{convertToEmojiNumbers(formatTime(s.allTimeBestTime))}</td>
+                          <td>{s.totalRounds.toString()}</td>
+                          <td>{formatTime(s.todayBestTime)}</td>
+                          <td>{formatTime(s.allTimeBestTime)}</td>
                         </tr>
                       );
                     })}
