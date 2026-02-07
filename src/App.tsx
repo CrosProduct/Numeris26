@@ -33,12 +33,25 @@ function App() {
     return `${month}/${day}/${year}`;
   };
 
+  const convertToEmojiNumbers = (text: string) => {
+    const map: { [key: string]: string } = {
+      '0': '0️⃣', '1': '1️⃣', '2': '2️⃣', '3': '3️⃣', '4': '4️⃣',
+      '5': '5️⃣', '6': '6️⃣', '7': '7️⃣', '8': '8️⃣', '9': '9️⃣'
+    };
+    return text.split('').map(char => map[char] || char).join('');
+  };
+
   const handleShare = async () => {
     if (stats.dailyChallenge.status === 'none') return;
-    const resultText = stats.dailyChallenge.status === 'completed'
-      ? `Completed in ${formatTime(stats.dailyChallenge.time)}`
-      : 'Quit';
+
+    const timeText = formatTime(stats.dailyChallenge.time);
+    const emojiTime = convertToEmojiNumbers(timeText);
     const dateStr = formatDisplayNameDate(stats.dailyChallenge.date);
+
+    const resultText = stats.dailyChallenge.status === 'completed'
+      ? `Completed in ${emojiTime}`
+      : 'Quit';
+
     const shareText = `Numeris Daily Challenge\n${resultText}\non ${dateStr}`;
     const shareUrl = 'https://numeris26-76e59.web.app';
 
@@ -81,7 +94,7 @@ function App() {
               return <div key={i} className={`dot ${status}`} />;
             })}
           </div>
-          <div className="timer">{formatTime(gameState.timer)}</div>
+          <div className="timer">{convertToEmojiNumbers(formatTime(gameState.timer))}</div>
           <TimerBar
             key={gameState.round}
             roundStartTime={roundStartTime}
@@ -119,7 +132,7 @@ function App() {
                   <div className="daily-result-container">
                     <div className="daily-result-text">
                       {stats.dailyChallenge.status === 'completed'
-                        ? `Completed in ${formatTime(stats.dailyChallenge.time)}`
+                        ? `Completed in ${convertToEmojiNumbers(formatTime(stats.dailyChallenge.time))}`
                         : 'Quit'}
                     </div>
                     <div className="daily-actions">
@@ -178,9 +191,9 @@ function App() {
                       return (
                         <tr key={d}>
                           <td className="diff-name">{d.charAt(0).toUpperCase() + d.slice(1)}</td>
-                          <td>{s.totalRounds}</td>
-                          <td>{formatTime(s.todayBestTime)}</td>
-                          <td>{formatTime(s.allTimeBestTime)}</td>
+                          <td>{convertToEmojiNumbers(s.totalRounds.toString())}</td>
+                          <td>{convertToEmojiNumbers(formatTime(s.todayBestTime))}</td>
+                          <td>{convertToEmojiNumbers(formatTime(s.allTimeBestTime))}</td>
                         </tr>
                       );
                     })}
