@@ -147,7 +147,7 @@ function App() {
                       <div className="daily-result-text">
                         {stats.dailyChallenge.status === 'completed'
                           ? `Completed in ${convertToEmojiNumbers(formatTime(stats.dailyChallenge.time))}`
-                          : 'Quit'}
+                          : 'Aborted'}
                       </div>
                       <div className="daily-actions">
                         <button
