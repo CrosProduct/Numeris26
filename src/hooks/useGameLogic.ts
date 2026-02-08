@@ -530,6 +530,7 @@ export function useGameLogic() {
         handleUndo,
         roundStartTime: gameState.roundStartTime,
         stats,
-        playBubble
+        playBubble,
+        getDailySeed
     };
 }

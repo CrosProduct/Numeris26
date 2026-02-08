@@ -9,7 +9,7 @@ import './components/Layout.css';
 import { useState } from 'react';
 
 function App() {
-  const { gameState, startGame, quitGame, goToStart, handleTileClick, handleUndo, roundStartTime, stats, playBubble } = useGameLogic();
+  const { gameState, startGame, quitGame, goToStart, handleTileClick, handleUndo, roundStartTime, stats, playBubble, getDailySeed } = useGameLogic();
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>('medium');
   const [punchedButton, setPunchedButton] = useState<string | null>(null);
 
@@ -134,7 +134,10 @@ function App() {
 
               <section className="panel-section daily-section">
                 <h2 className="section-title">Daily Challenge</h2>
-                <div className="section-date">{formatDisplayNameDate(today)}</div>
+                <div className="section-date">
+                  {formatDisplayNameDate(today)}
+                  <span style={{ fontSize: '0.8rem', opacity: 0.7, marginLeft: '8px' }}>#{getDailySeed()}</span>
+                </div>
 
                 <div className="daily-controls">
                   {stats.dailyChallenge.status === 'none' ? (
