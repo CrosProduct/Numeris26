@@ -87,6 +87,58 @@ export function useGameLogic() {
         localStorage.setItem('numeris26-stats', JSON.stringify(stats));
     }, [stats]);
 
+    // Check for day change while app is running
+    useEffect(() => {
+        const checkDayChange = () => {
+            const now = new Date();
+            const today = now.toISOString().split('T')[0];
+
+            setStats(prev => {
+                // If the stored date is different from today, perform reset
+                if (prev.lastPlayedDate !== today) {
+                    const updatedDifficultyStats = { ...prev.difficultyStats };
+                    (Object.keys(updatedDifficultyStats) as Difficulty[]).forEach(d => {
+                        updatedDifficultyStats[d] = { ...updatedDifficultyStats[d], todayBestTime: undefined };
+                    });
+
+                    return {
+                        ...prev,
+                        difficultyStats: updatedDifficultyStats,
+                        dailyChallenge: prev.dailyChallenge.date === today ? prev.dailyChallenge : { date: today, status: 'none' },
+                        lastPlayedDate: today
+                    };
+                }
+
+                // Also check specifically for daily challenge date mismatch to be safe
+                if (prev.dailyChallenge.date !== today) {
+                    return {
+                        ...prev,
+                        dailyChallenge: { date: today, status: 'none' }
+                    };
+                }
+
+                return prev;
+            });
+        };
+
+        // Check immediately, then every minute, and on visibility change
+        checkDayChange();
+        const interval = setInterval(checkDayChange, 60000);
+
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'visible') {
+                checkDayChange();
+            }
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        return () => {
+            clearInterval(interval);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
+    }, []);
+
     const incrementRoundCount = useCallback((roundId: string, difficulty: Difficulty) => {
         if (lastCountedRoundRef.current === roundId) return;
         lastCountedRoundRef.current = roundId;
