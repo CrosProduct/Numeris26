@@ -136,7 +136,7 @@ function App() {
                 <h2 className="section-title">Daily Challenge</h2>
                 <div className="section-date">
                   {formatDisplayNameDate(today)}
-                  <span style={{ fontSize: '0.8rem', opacity: 0.7, marginLeft: '8px' }}>#{getDailySeed()}</span>
+                  <span style={{ fontSize: '0.8rem', opacity: 0.2, marginLeft: '8px' }}>#{getDailySeed()}</span>
                 </div>
 
                 <div className="daily-controls">
