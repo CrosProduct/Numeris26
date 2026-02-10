@@ -611,6 +611,7 @@ body {
   /* Slightly smaller than main title but prominent */
   margin: 0;
   text-align: left;
+  color: var(--success-color);
 }
 
 .seed-display {
@@ -632,8 +633,8 @@ body {
 }
 
 .calendar-month {
-  background: #dc2626;
-  /* Red-600 */
+  background: var(--success-color);
+  /* Green to match Play button */
   color: white;
   font-size: 0.75rem;
   font-weight: 700;
