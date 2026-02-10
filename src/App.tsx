@@ -75,10 +75,6 @@ function App() {
   };
 
   const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  const today = `${year}-${month}-${day}`;
 
   return (
     <>
@@ -137,10 +133,15 @@ function App() {
               <h1 className="main-title">Numeris26</h1>
 
               <section className="panel-section daily-section">
-                <h2 className="section-title">Daily Challenge</h2>
-                <div className="section-date">
-                  {formatDisplayNameDate(today)}
-                  <span style={{ fontSize: '0.8rem', opacity: 0.2, marginLeft: '8px' }}>#{getDailySeed()}</span>
+                <div className="daily-header">
+                  <div className="daily-title-container">
+                    <h2 className="section-title">Daily Challenge</h2>
+                    <span className="seed-display">#{getDailySeed()}</span>
+                  </div>
+                  <div className="calendar-icon">
+                    <div className="calendar-month">{now.toLocaleString('en-US', { month: 'short' }).toUpperCase()}</div>
+                    <div className="calendar-day">{now.getDate()}</div>
+                  </div>
                 </div>
 
                 <div className="daily-controls">
