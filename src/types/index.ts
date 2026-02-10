@@ -35,6 +35,7 @@ export interface GameStats {
     dailyChallenge: DailyChallengeState;
     lastPlayedDate: string; // ISO date string (YYYY-MM-DD)
     startDate: string; // ISO date string
+    streak: number; // Consecutive days of completed daily challenges
 }
 
 export interface GameState {

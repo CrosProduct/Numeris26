@@ -759,4 +759,54 @@ body {
 /* Ensure centering of text within the block */
 .daily-result-text {
     text-align: center;
+}/* Streak Box Styling */
+.streak-box {
+    background: white;
+    border-radius: 8px;
+    width: 54px;
+    height: 54px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+    position: absolute !important;
+    right: 0 !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+.streak-header {
+    background: white;
+    color: #1e293b;
+    /* Black text */
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-align: center;
+    padding: 3px 0;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.streak-count {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #64748b;
+    /* Gray background */
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1;
+    padding-bottom: 2px;
+}
+
+/* Update calendar to be on left */
+.calendar-icon {
+    position: absolute !important;
+    left: 0 !important;
+    right: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
 }

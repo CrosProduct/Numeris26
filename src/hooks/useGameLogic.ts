@@ -62,6 +62,7 @@ export function useGameLogic() {
             dailyChallenge: { date: today, status: 'none' },
             lastPlayedDate: today,
             startDate: today,
+            streak: 0,
         };
 
         if (saved) {
@@ -74,6 +75,9 @@ export function useGameLogic() {
             }
 
             const s = parsed as GameStats;
+            // Ensure streak exists (migration)
+            const currentStreak = s.streak ?? 0;
+
             // Handle date change
             if (s.lastPlayedDate !== today) {
                 const updatedDifficultyStats = { ...s.difficultyStats };
@@ -81,14 +85,19 @@ export function useGameLogic() {
                     updatedDifficultyStats[d] = { ...updatedDifficultyStats[d], todayBestTime: undefined };
                 });
 
+                // Check if previous day's challenge was completed
+                const previousDayCompleted = s.dailyChallenge.status === 'completed';
+                const newStreak = previousDayCompleted ? currentStreak : 0;
+
                 return {
                     ...s,
                     difficultyStats: updatedDifficultyStats,
                     dailyChallenge: s.dailyChallenge.date === today ? s.dailyChallenge : { date: today, status: 'none' },
-                    lastPlayedDate: today
+                    lastPlayedDate: today,
+                    streak: newStreak
                 };
             }
-            return s;
+            return { ...s, streak: currentStreak };
         }
 
         return defaultStats;
@@ -171,6 +180,8 @@ export function useGameLogic() {
 
             if (isDaily && !isReVisit && prev.dailyChallenge.status === 'none') {
                 next.dailyChallenge = { date: today, status: 'completed', time };
+                // Increment streak on first completion of the day
+                next.streak = (prev.streak || 0) + 1;
             } else if (!isDaily) {
                 const current = next.difficultyStats[difficulty];
                 const newTodayBest = current.todayBestTime ? Math.min(current.todayBestTime, time) : time;
@@ -192,7 +203,8 @@ export function useGameLogic() {
                 return {
                     ...prev,
                     dailyChallenge: { date: today, status: 'quit' },
-                    lastPlayedDate: today
+                    lastPlayedDate: today,
+                    streak: 0 // Reset streak on quit
                 };
             }
             return prev;
