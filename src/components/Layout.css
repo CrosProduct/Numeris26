@@ -724,4 +724,25 @@ body {
 .square-btn {
   font-weight: 600;
   letter-spacing: -0.5px;
+}/* Center Daily Challenge Title */
+.daily-header {
+    justify-content: center !important;
+    position: relative !important;
+    min-height: 54px;
+    /* Ensure height fits calendar */
+}
+
+.daily-title-container {
+    align-items: center !important;
+}
+
+.daily-header .section-title {
+    text-align: center !important;
+}
+
+.calendar-icon {
+    position: absolute !important;
+    right: 0 !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
 }
