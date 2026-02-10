@@ -377,7 +377,7 @@ body {
   font-family: 'Outfit', sans-serif;
   font-size: 1.4rem;
   margin: 0;
-  background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+  background: linear-gradient(180deg, #3b82f6 0%, #22c55e 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -654,4 +654,17 @@ body {
   font-weight: 800;
   line-height: 1;
   padding-bottom: 2px;
+}
+
+/* Panel Borders */
+.daily-section {
+  border: 1px solid var(--success-color);
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.1);
+  /* Subtle green glow */
+}
+
+.practice-section {
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+  /* Subtle blue glow */
 }
