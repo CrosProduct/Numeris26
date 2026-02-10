@@ -668,3 +668,60 @@ body {
   box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
   /* Subtle blue glow */
 }
+
+/* Daily Result Layout Tweak */
+.daily-result-container {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: stretch !important;
+  gap: 0.8rem;
+  width: 100%;
+}
+
+.daily-result-text {
+  flex: 1;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1rem !important;
+  line-height: 1.2;
+}
+
+.result-label {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.result-time {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.square-btn {
+  aspect-ratio: 1/1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem !important;
+  font-size: 0.8rem !important;
+  /* Smaller font to fit */
+  line-height: 1;
+  min-width: 0 !important;
+  /* Allow shrinking */
+  flex: 0 0 auto;
+  height: auto;
+  /* Let it stretch */
+}
+
+/* Ensure minimum height so buttons fit text */
+.daily-result-container {
+  min-height: 4rem;
+}
+
+.square-btn {
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
