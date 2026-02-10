@@ -614,12 +614,6 @@ body {
   color: var(--success-color);
 }
 
-.seed-display {
-  font-size: 0.8rem;
-  opacity: 0.3;
-  font-family: monospace;
-}
-
 .calendar-icon {
   background: white;
   border-radius: 8px;

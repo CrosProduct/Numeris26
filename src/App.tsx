@@ -9,7 +9,7 @@ import './components/Layout.css';
 import { useState } from 'react';
 
 function App() {
-  const { gameState, startGame, quitGame, goToStart, handleTileClick, handleUndo, roundStartTime, stats, playBubble, getDailySeed } = useGameLogic();
+  const { gameState, startGame, quitGame, goToStart, handleTileClick, handleUndo, roundStartTime, stats, playBubble } = useGameLogic();
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>('medium');
   const [punchedButton, setPunchedButton] = useState<string | null>(null);
 
