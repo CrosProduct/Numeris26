@@ -745,4 +745,18 @@ body {
     right: 0 !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
+}/* Mobile Refinements */
+.daily-result-container {
+    gap: 0.4rem !important;
+    /* Reduce gap */
+}
+
+.daily-result-text {
+    padding: 0.2rem 0.4rem !important;
+    /* Reduce horizontal padding significantly */
+}
+
+/* Ensure centering of text within the block */
+.daily-result-text {
+    text-align: center;
 }

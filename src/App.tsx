@@ -21,11 +21,11 @@ function App() {
   };
 
   const formatTime = (ms?: number) => {
-    if (ms === undefined) return '--:--.---';
+    if (ms === undefined) return '--:--.--';
     const min = Math.floor(ms / 60000);
     const sec = Math.floor((ms % 60000) / 1000);
-    const msec = ms % 1000;
-    return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}.${msec.toString().padStart(3, '0')}`;
+    const centisec = Math.floor((ms % 1000) / 10);
+    return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}.${centisec.toString().padStart(2, '0')}`;
   };
 
   const formatDisplayNameDate = (dateStr: string) => {
