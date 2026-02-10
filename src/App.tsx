@@ -141,7 +141,6 @@ function App() {
 
                   <div className="daily-title-container">
                     <h2 className="section-title">Daily Challenge</h2>
-                    <span className="seed-display">#{getDailySeed()}</span>
                   </div>
 
                   <div className="streak-box">
