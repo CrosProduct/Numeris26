@@ -483,7 +483,7 @@ body {
 .stats-spreadsheet-container {
   width: 100%;
   overflow-x: auto;
-  margin-top: 1rem;
+  margin-top: 0;
 }
 
 .stats-table {

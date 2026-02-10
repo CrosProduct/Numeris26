@@ -14,6 +14,15 @@ const soundStart = new Howl({ src: ['/sounds/start.mp3'] });
 const soundFinal = new Howl({ src: ['/sounds/final.mp3'] });
 const soundBubble = new Howl({ src: ['/sounds/bubble.mp3'] });
 
+// Helper to get local date string YYYY-MM-DD
+export const getLocalDateString = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+};
+
 export function useGameLogic() {
     const [gameState, setGameState] = useState<GameState>({
         round: 1,
@@ -37,7 +46,10 @@ export function useGameLogic() {
     const [stats, setStats] = useState<GameStats>(() => {
         const saved = localStorage.getItem('numeris26-stats');
         const now = new Date();
-        const today = now.toISOString().split('T')[0];
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const today = `${year}-${month}-${day}`;
 
         const defaultDifficultyStats: Record<Difficulty, DifficultyStats> = {
             easy: { totalRounds: 0 },
@@ -90,8 +102,7 @@ export function useGameLogic() {
     // Check for day change while app is running
     useEffect(() => {
         const checkDayChange = () => {
-            const now = new Date();
-            const today = now.toISOString().split('T')[0];
+            const today = getLocalDateString();
 
             setStats(prev => {
                 // If the stored date is different from today, perform reset
@@ -154,7 +165,7 @@ export function useGameLogic() {
     }, []);
 
     const recordGameCompletion = useCallback((difficulty: Difficulty, isDaily: boolean, isReVisit: boolean, time: number) => {
-        const today = new Date().toISOString().split('T')[0];
+        const today = getLocalDateString();
         setStats(prev => {
             const next = { ...prev, lastPlayedDate: today };
 
@@ -175,7 +186,7 @@ export function useGameLogic() {
     }, []);
 
     const recordChallengeQuit = useCallback(() => {
-        const today = new Date().toISOString().split('T')[0];
+        const today = getLocalDateString();
         setStats(prev => {
             if (prev.dailyChallenge.status === 'none') {
                 return {
@@ -187,6 +198,8 @@ export function useGameLogic() {
             return prev;
         });
     }, []);
+
+
 
     const playBubble = useCallback(() => {
         soundBubble.play();
@@ -211,6 +224,8 @@ export function useGameLogic() {
 
         // Play start sound when round begins
         soundStart.play();
+
+
 
         // Set first slot of first formula as active
         if (formulas.length > 0 && formulas[0].slots.length > 0) {
