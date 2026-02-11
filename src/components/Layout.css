@@ -273,12 +273,14 @@ body {
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   z-index: 100;
-  gap: 2rem;
+  gap: 1rem;
   width: 100%;
   height: 100%;
+  padding: 2rem 1rem;
+  overflow-y: auto;
 }
 
 .overlay h1 {
@@ -287,8 +289,13 @@ body {
 }
 
 .overlay h1.praise-message {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-size: 1.6rem;
+  margin-bottom: 0.3rem;
+}
+
+.overlay h2 {
+  font-size: 1.2rem;
+  margin: 0.3rem 0;
 }
 
 .difficulty-selector {
@@ -444,7 +451,7 @@ body {
 }
 
 .btn-secondary {
-  flex: 1;
+  flex: 10;
   padding: 0.7rem;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.1);
@@ -474,6 +481,8 @@ body {
 .btn-daily {
   background-color: var(--success-color);
   box-shadow: 0 4px 6px rgba(34, 197, 94, 0.3);
+  width: 100%;
+  max-width: 300px;
 }
 
 .btn-daily:hover {
@@ -813,14 +822,16 @@ body {
 /* Game Over Share Button */
 .btn-share-gameover {
   display: flex;
+  flex: none;
   align-items: center;
   justify-content: center;
-  padding: 0.8rem 2rem;
-  font-size: 1.1rem;
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
   border-radius: var(--radius-full);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  background: #6b7280
 }
 
 .btn-share-gameover svg {

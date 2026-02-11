@@ -9,7 +9,7 @@ import './components/Layout.css';
 import { useState } from 'react';
 
 function App() {
-  const { gameState, startGame, quitGame, goToStart, handleTileClick, handleUndo, roundStartTime, stats, playBubble } = useGameLogic();
+  const { gameState, startGame, quitGame, goToStart, handleTileClick, handleUndo, roundStartTime, stats, playBubble, resetDailyChallenge } = useGameLogic();
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>('medium');
   const [punchedButton, setPunchedButton] = useState<string | null>(null);
 
@@ -134,7 +134,7 @@ function App() {
 
               <section className="panel-section daily-section">
                 <div className="daily-header">
-                  <div className="calendar-icon">
+                  <div className="calendar-icon" onClick={resetDailyChallenge} style={{ cursor: 'pointer' }} title="Click to reset daily challenge (debug)">
                     <div className="calendar-month">{now.toLocaleString('en-US', { month: 'short' }).toUpperCase()}</div>
                     <div className="calendar-day">{now.getDate()}</div>
                   </div>
@@ -276,7 +276,7 @@ function App() {
                 <button
                   className="btn-secondary btn-share-gameover"
                   onClick={handleShare}
-                  style={{ marginBottom: '1rem' }}
+                  style={{ marginBottom: '0.5rem' }}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />

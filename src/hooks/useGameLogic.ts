@@ -217,6 +217,16 @@ export function useGameLogic() {
         soundBubble.play();
     }, []);
 
+    // Debug function to reset daily challenge
+    const resetDailyChallenge = useCallback(() => {
+        const today = getLocalDateString();
+        setStats(prev => ({
+            ...prev,
+            dailyChallenge: { date: today, status: 'none' },
+            lastPlayedDate: today
+        }));
+    }, []);
+
     const getDailySeed = useCallback(() => {
         const now = new Date();
         const start = new Date(now.getFullYear(), 0, 0);
@@ -558,6 +568,7 @@ export function useGameLogic() {
         roundStartTime: gameState.roundStartTime,
         stats,
         playBubble,
-        getDailySeed
+        getDailySeed,
+        resetDailyChallenge
     };
 }
