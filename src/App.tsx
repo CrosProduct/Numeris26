@@ -241,7 +241,7 @@ function App() {
           )}
 
           {gameState.status === 'game_over' && (
-            <div className="overlay">
+            <div className="overlay game-over-overlay">
               {(() => {
                 const score = gameState.roundHistory.filter(r => r === 'won').length;
                 const totalTimeSec = gameState.timer / 1000;
@@ -268,9 +268,9 @@ function App() {
                   message = "Cool!";
                 }
 
+
                 return <h1 className="praise-message">{message}</h1>;
               })()}
-              <h2>Score: {gameState.roundHistory.filter(r => r === 'won').length} / {gameState.difficulty === 'easy' ? 1 : 3}</h2>
 
               {gameState.isDailyChallenge && !gameState.isReVisit && (
                 <button

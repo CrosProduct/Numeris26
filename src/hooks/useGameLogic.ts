@@ -233,7 +233,7 @@ export function useGameLogic() {
         const diff = now.getTime() - start.getTime();
         const oneDay = 1000 * 60 * 60 * 24;
         const dayOfYear = Math.floor(diff / oneDay);
-        return (now.getFullYear() * 1000) + dayOfYear;
+        return dayOfYear * 10000 + now.getFullYear();
     }, []);
 
     const startNextRound = useCallback((roundNum: number, currentDifficulty?: Difficulty, isDaily?: boolean, isReVisit?: boolean) => {
