@@ -134,18 +134,18 @@ function App() {
 
               <section className="panel-section daily-section">
                 <div className="daily-header">
-                  <div className="calendar-icon" onClick={resetDailyChallenge} style={{ cursor: 'pointer' }} title="Click to reset daily challenge (debug)">
-                    <div className="calendar-month">{now.toLocaleString('en-US', { month: 'short' }).toUpperCase()}</div>
-                    <div className="calendar-day">{now.getDate()}</div>
+                  <div className="streak-box">
+                    <div className="streak-header">STREAK</div>
+                    <div className="streak-count">{stats.streak}</div>
                   </div>
 
                   <div className="daily-title-container">
                     <h2 className="section-title">Daily Challenge</h2>
                   </div>
 
-                  <div className="streak-box">
-                    <div className="streak-header">STREAK</div>
-                    <div className="streak-count">{stats.streak}</div>
+                  <div className="calendar-icon" onClick={resetDailyChallenge} style={{ cursor: 'pointer' }} title="Click to reset daily challenge (debug)">
+                    <div className="calendar-month">{now.toLocaleString('en-US', { month: 'short' }).toUpperCase()}</div>
+                    <div className="calendar-day">{now.getDate()}</div>
                   </div>
                 </div>
 
