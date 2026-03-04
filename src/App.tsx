@@ -151,12 +151,12 @@ function App() {
 
                 <div className="daily-controls">
                   {stats.dailyChallenge.status === 'none' ? (
-                    <button className="btn-primary btn-daily" onClick={() => startGame('hard', true)}>Play</button>
+                    <button className="btn-primary btn-daily" onClick={() => startGame('medium', true)}>Play</button>
                   ) : (
                     <div className="daily-result-container">
                       <button
                         className="btn-secondary btn-revisit square-btn"
-                        onClick={() => startGame('hard', true, true)}
+                        onClick={() => startGame('medium', true, true)}
                         title="ReVisit"
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

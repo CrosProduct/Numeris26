@@ -239,7 +239,7 @@ export function useGameLogic() {
     const startNextRound = useCallback((roundNum: number, currentDifficulty?: Difficulty, isDaily?: boolean, isReVisit?: boolean) => {
         const difficulty = currentDifficulty || gameState.difficulty;
         const isDailyChallenge = isDaily !== undefined ? isDaily : gameState.isDailyChallenge;
-        const useSameOperator = (difficulty === 'easy' || difficulty === 'medium') && !isDailyChallenge;
+        const useSameOperator = difficulty === 'easy' || difficulty === 'medium' || isDailyChallenge;
 
         const seed = isDailyChallenge ? getDailySeed() : undefined;
         const { formulas, poolNumbers } = generateRound(roundNum, useSameOperator, seed);

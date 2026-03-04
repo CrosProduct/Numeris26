@@ -39,17 +39,17 @@ export function generateRound(roundId: number, useSameOperator: boolean = false,
         let nA, nB, nC;
 
         if (operator === '/') {
-            nB = getRandomInt(1, 10, rng);
-            nC = getRandomInt(1, 10, rng);
+            nB = getRandomInt(2, 10, rng);
+            nC = getRandomInt(0, 10, rng);
             nA = nB * nC;
         } else {
             nA = getRandomInt(0, 10, rng);
-            nB = getRandomInt(0, 10, rng);
+            nB = getRandomInt(2, 10, rng);
 
             if (operator === '+') {
                 nC = nA + nB;
             } else if (operator === '-') {
-                nC = nA - nB;
+                nC = Math.abs(nA - nB);
             } else { // x
                 nC = nA * nB;
             }
